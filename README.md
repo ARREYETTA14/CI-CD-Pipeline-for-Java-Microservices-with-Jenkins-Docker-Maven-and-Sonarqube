@@ -126,78 +126,77 @@ Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these
 1. Launch an EC2 Instance.
 2. Open the following ports on the server sg: 22,9000(source; Jenkins SG ID).
 3. Use the following steps to install SonarQube:
-
-#### 3.1 - Install Docker & Docker Compose
-```bash
-# Update & install dependencies
-sudo yum update -y
-sudo yum install -y docker
-
-# Start Docker
-sudo systemctl enable docker
-sudo systemctl start docker
-
-# Add ec2-user to Docker group
-sudo usermod -aG docker ec2-user
-
-# Install Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
-  -o /usr/local/bin/docker-compose
-
-sudo chmod +x /usr/local/bin/docker-compose
-
-# Verify versions
-docker --version
-docker-compose --version
-```
-#### 3.2 - Create Your Docker Compose File
-```bash
-mkdir sonarqube-docker && cd sonarqube-docker
-sudo nano docker-compose.yml
-```
-Paste this inside:
-
-```yaml
-version: '3.8'
-
-services:
-  db:
-    image: postgres:13
-    container_name: postgres
-    environment:
-      POSTGRES_USER: sonar
-      POSTGRES_PASSWORD: sonar
-      POSTGRES_DB: sonarqube
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: always
-
-  sonarqube:
-    image: sonarqube:10.2.1-community
-    container_name: sonarqube
-    depends_on:
-      - db
-    ports:
-      - "9000:9000"
-    environment:
-      SONAR_JDBC_URL: jdbc:postgresql://db:5432/sonarqube
-      SONAR_JDBC_USERNAME: sonar
-      SONAR_JDBC_PASSWORD: sonar
-    volumes:
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-    restart: always
-
-volumes:
-  postgres_data:
-  sonarqube_data:
-  sonarqube_extensions:
-```
-
-#### 3.3 - Run the Stack
-```bash
-docker-compose up -d
-```
+	#### 3.1 - Install Docker & Docker Compose
+	```bash
+	# Update & install dependencies
+	sudo yum update -y
+	sudo yum install -y docker
+	
+	# Start Docker
+	sudo systemctl enable docker
+	sudo systemctl start docker
+	
+	# Add ec2-user to Docker group
+	sudo usermod -aG docker ec2-user
+	
+	# Install Docker Compose
+	sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
+	  -o /usr/local/bin/docker-compose
+	
+	sudo chmod +x /usr/local/bin/docker-compose
+	
+	# Verify versions
+	docker --version
+	docker-compose --version
+	```
+	#### 3.2 - Create Your Docker Compose File
+	```bash
+	mkdir sonarqube-docker && cd sonarqube-docker
+	sudo nano docker-compose.yml
+	```
+	Paste this inside:
+	
+	```yaml
+	version: '3.8'
+	
+	services:
+	  db:
+	    image: postgres:13
+	    container_name: postgres
+	    environment:
+	      POSTGRES_USER: sonar
+	      POSTGRES_PASSWORD: sonar
+	      POSTGRES_DB: sonarqube
+	    volumes:
+	      - postgres_data:/var/lib/postgresql/data
+	    restart: always
+	
+	  sonarqube:
+	    image: sonarqube:10.2.1-community
+	    container_name: sonarqube
+	    depends_on:
+	      - db
+	    ports:
+	      - "9000:9000"
+	    environment:
+	      SONAR_JDBC_URL: jdbc:postgresql://db:5432/sonarqube
+	      SONAR_JDBC_USERNAME: sonar
+	      SONAR_JDBC_PASSWORD: sonar
+	    volumes:
+	      - sonarqube_data:/opt/sonarqube/data
+	      - sonarqube_extensions:/opt/sonarqube/extensions
+	    restart: always
+	
+	volumes:
+	  postgres_data:
+	  sonarqube_data:
+	  sonarqube_extensions:
+	```
+	
+	#### 3.3 - Run the Stack
+	```bash
+	docker-compose up -d
+	```
 
 4. Once SonarQube is running, go to ```http://<your_sonarqube_instance_public_ip>:9000```.
 Default creds:

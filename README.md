@@ -266,21 +266,7 @@ Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log 
 
 ## Step 4: Create Dockerfile for Java Application
 The Dockerfile will instruct Docker how to create an image from the Java application.
-Save the code in the ```Dockerfile``` file in your Github Repo.
-
-```dockerfile
-# Use a base image with OpenJDK
-FROM openjdk:11-jre-slim
-
-# Set working directory inside container
-WORKDIR /app
-
-# Copy the built JAR file from Maven's target folder
-COPY target/hello-world-1.0-SNAPSHOT.jar /app/hello-world.jar
-
-# Set the command to run your Java application
-ENTRYPOINT ["java", "-jar", "hello-world.jar"]
-```
+Save the code in the ```Dockerfile``` file in your GitHub repo.
 
 ## Step 5: ECR & EKS Setup
 1. Create an ECR Repository

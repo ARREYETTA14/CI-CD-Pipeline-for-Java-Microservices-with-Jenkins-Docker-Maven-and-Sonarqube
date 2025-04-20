@@ -205,38 +205,38 @@ Default creds:
 - Password: ```admin```
 
 5. Make compose file rebooted upon EC2 reboot.
-## 5.1 - Open the Crontab for Your User (Usually ```ec2-user```)
-```bash 
-crontab -e
-```
-- If it's your first time, it may ask you to choose an editor.
-
-	- Pick ```1``` for nano, unless you're feeling like a Vim god.
-
-
-## 5.2 - Add This to the Bottom of the File
-```bash
-@reboot cd /home/ec2-user/sonarqube-docker && /usr/local/bin/docker-compose up -d
-```
-**NB:** 
-- Check your ```docker-compose``` path — it might not be in ```/usr/local/bin/``` for all systems.
-	- Run this to be sure:
-	```bash
-	which docker-compose
+	## 5.1 - Open the Crontab for Your User (Usually ```ec2-user```)
+	```bash 
+	crontab -e
 	```
-	- Replace ```/usr/local/bin/docker-compose``` with whatever path it gives you.
-
-## 5.3 - Test start of docker-compose upon instance reboot
-
-- Once your crontab is saved, reboot your instance:
-```bash
-sudo reboot
-```
-- Then wait like 1–2 minutes, reconnect via SSH, and check:
-```bash
-docker ps
-```
-You should see SonarQube and PostgreSQL containers running perfectly well.
+	- If it's your first time, it may ask you to choose an editor.
+	
+		- Pick ```1``` for nano, unless you're feeling like a Vim god.
+	
+	
+	## 5.2 - Add This to the Bottom of the File
+	```bash
+	@reboot cd /home/ec2-user/sonarqube-docker && /usr/local/bin/docker-compose up -d
+	```
+	**NB:** 
+	- Check your ```docker-compose``` path — it might not be in ```/usr/local/bin/``` for all systems.
+		- Run this to be sure:
+		```bash
+		which docker-compose
+		```
+		- Replace ```/usr/local/bin/docker-compose``` with whatever path it gives you.
+	
+	## 5.3 - Test start of docker-compose upon instance reboot
+	
+	- Once your crontab is saved, reboot your instance:
+	```bash
+	sudo reboot
+	```
+	- Then wait like 1–2 minutes, reconnect via SSH, and check:
+	```bash
+	docker ps
+	```
+	You should see SonarQube and PostgreSQL containers running perfectly well.
 
 ### 3.2 - Generate a SonarQube Authentication Token
 - Login to SonarQube

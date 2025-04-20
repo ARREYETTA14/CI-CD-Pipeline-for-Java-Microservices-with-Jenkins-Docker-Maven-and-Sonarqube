@@ -124,10 +124,10 @@ Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these
 ## Step 3: Set up SonarQube
 ### 3.1 - Install SonarQube
 1. Launch an EC2 Instance.
-2. Open the following ports on the server sg: 22,9000(source;Jenkins SG ID).
-3. Use the following steps to install sonarqube:
+2. Open the following ports on the server sg: 22,9000(source; Jenkins SG ID).
+3. Use the following steps to install SonarQube:
 
-## 3.1 - Install Docker & Docker Compose
+#### 3.1 - Install Docker & Docker Compose
 ```bash
 # Update & install dependencies
 sudo yum update -y
@@ -150,7 +150,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker --version
 docker-compose --version
 ```
-## 3.2 - Create Your Docker Compose File
+#### 3.2 - Create Your Docker Compose File
 ```bash
 mkdir sonarqube-docker && cd sonarqube-docker
 sudo nano docker-compose.yml
@@ -194,12 +194,12 @@ volumes:
   sonarqube_extensions:
 ```
 
-## 3.3 - Run the Stack
+#### 3.3 - Run the Stack
 ```bash
 docker-compose up -d
 ```
 
-4. Once SonarQube is up and running, go to ```http://<your_sonarqube_instance_public_ip>:9000```.
+4. Once SonarQube is running, go to ```http://<your_sonarqube_instance_public_ip>:9000```.
 Default creds:
 
 - Username: ```admin```

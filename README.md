@@ -35,24 +35,33 @@ This is a basic "Hello, World!" program:
 4. Install Java, Jenkins, Docker and add Jenkins user to the docker group on your Jenkins EC2 instance:
 ```bash
 # Update and install necessary dependencies
-sudo yum update && sudo apt upgrade -y
+sudo yum update && sudo yum upgrade -y
 sudo yum install openjdk-11-jdk -y
+
+# Jenkins now requires Java 17 or higher. Install Amazon Corretto 17:
+sudo amazon-linux-extras enable corretto17
+sudo yum install java-17-amazon-corretto -y
+# Java version
 java -version  # Check if Java is installed
 
 # Add Jenkins repository and key
-wget -q -O - https://pkg.jenkins.io/jenkins.io.key | sudo apt-key add -
-echo "deb http://pkg.jenkins.io/debian/ stable main" | sudo tee -a /etc/apt/sources.list.d/jenkins.list
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 
 # Install Jenkins
-sudo yum update
 sudo yum install jenkins -y
 
+
 # Start Jenkins
+sudo systemctl daemon-reload
 sudo systemctl start jenkins
 sudo systemctl enable jenkins
 
-# Open port 8080 (default for Jenkins)
-sudo ufw allow 8080
+# Check Jenkins Status
+sudo systemctl status jenkins
+
+# make sure correcto 17 is selected
+sudo alternatives --config java
 
 # --------------------------------------------
 # Step 1: Update the system packages

@@ -214,7 +214,7 @@ Default creds:
 - Password: ```admin```
 
 5. Make compose file rebooted upon EC2 reboot.
-	## 5.1 - Open the Crontab for Your User (Usually ```ec2-user```)
+	#### 5.1 - Open the Crontab for Your User (Usually ```ec2-user```)
 	```bash 
 	crontab -e
 	```
@@ -223,7 +223,7 @@ Default creds:
 		- Pick ```1``` for nano, unless you're feeling like a Vim god.
 	
 	
-	## 5.2 - Add This to the Bottom of the File
+	#### 5.2 - Add This to the Bottom of the File
 	```bash
 	@reboot cd /home/ec2-user/sonarqube-docker && /usr/local/bin/docker-compose up -d
 	```
@@ -235,7 +235,7 @@ Default creds:
 		```
 		- Replace ```/usr/local/bin/docker-compose``` with whatever path it gives you.
 	
-	## 5.3 - Test start of docker-compose upon instance reboot
+	#### 5.3 - Test start of docker-compose upon instance reboot
 	
 	- Once your crontab is saved, reboot your instance:
 	```bash

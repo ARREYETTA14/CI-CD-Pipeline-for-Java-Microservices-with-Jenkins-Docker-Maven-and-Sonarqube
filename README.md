@@ -512,39 +512,6 @@ pipeline {
 
 ## Step 7: Generate the ```deployment.yaml``` and paste in the ```k8s/deployment``` directory in GitHub.
 ```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: hello-world-deployment
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: hello-world
-  template:
-    metadata:
-      labels:
-        app: hello-world
-    spec:
-      containers:
-      - name: hello-world
-        image: <your-account-id>.dkr.ecr.<your-region>.amazonaws.com/<your-repo-name>:latest
-        ports:
-        - containerPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: hello-world-service
-spec:
-  type: LoadBalancer
-  selector:
-    app: hello-world
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
-```
 
 **NB:** Make sure to change ```<your-account-id>``` and put your actul AWS account id, ```<your-region>``` with the region your ecr is, and ```<your-repo-name>``` with the actual repository name.
 

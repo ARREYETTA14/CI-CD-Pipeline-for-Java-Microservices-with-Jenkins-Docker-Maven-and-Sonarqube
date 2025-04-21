@@ -288,12 +288,14 @@ Default creds:
 				- **Environments**: Read & write
                                 - **Deployments**: Read & write
                                 - **Actions**: Read & write
+      
                         - Organisation Permissions (if applicable):
                                 - **Administration**: Read & write
                                 - **Blocking users**: Read & write
                                 - **Members**: Read & write
                                 - **Personal Access Token**: Read & write
                                 - **Projects**: Read & write
+      
                         - Account permissions:
                           	- **Block another account**: Read & write
                           	- **Email address**: Read & write

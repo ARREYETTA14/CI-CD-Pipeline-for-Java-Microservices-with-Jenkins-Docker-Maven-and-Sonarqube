@@ -208,6 +208,7 @@ Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these
     	sudo rm -rf /usr/bin/aws
     	curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     	unzip awscliv2.zip
+   	sudo ./aws/install
  	```
 	
 	```bash

@@ -132,7 +132,7 @@ Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these
 
 ## Step 3: Set up SonarQube
 ### 3.1 - Install SonarQube
-1. Launch an EC2 Instance.
+1. Launch an EC2 Instance. ```t3.medium``` instance type.
 2. Open the following ports on the server sg: 22,9000(source; Jenkins SG ID).
 3. Use the following steps to install SonarQube:
 	#### 3.1 - Install Docker & Docker Compose

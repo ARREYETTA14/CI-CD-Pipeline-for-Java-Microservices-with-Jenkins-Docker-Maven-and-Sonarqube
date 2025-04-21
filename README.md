@@ -266,31 +266,76 @@ Default creds:
 	You should see SonarQube and PostgreSQL containers running perfectly well.
 
 ### 3.2 - Integrating SonarQube with GitHub for code analysis
+- Create a **Github App** on Github.
+	- In GitHub, Navigate to:
+ 		- ```Settings``` → ```Developer settings``` → ```GitHub Apps``` → ```New GitHub App```.
+	- Fill in the following:
+		- **Github App name**: A recognisable name.
+		- **Home page URL**: The full URL to your GitHub repo.Copy from the browser once in the repo.
+    		- **Callback URL**: Same as the Homepage URL.
+        	- You can **uncheck** ```Active``` at the webhook section.
+           	- Set Permissions:
+			- Repository Permissions:
+				- **Checks**: Read & write
+				- **Contents**: Read-only
+				- **Pull requests**: Read & write
+				- Metadata: Read-only
+      				- **Commit statuses**: Read & write
+            			- **Merge queues**: Read & write
+                 		- **Projects**: Read & write
+                     		- **Packages**: Read & write
+                         	- **Issues**: Read & write
+                            	- **Environments**: Read & write
+                                - **Deployments**: Read & write
+                                - **Actions**: Read & write
+                        - Organisation Permissions (if applicable):
+                                - **Administration**: Read & write
+                                - **Blocking users**: Read & write
+                                - **Members**: Read & write
+                                - **Personal Access Token**: Read & write
+                                - **Projects**: Read & write
+                        - Account permissions:
+                          	- **Block another account**: Read & write
+                          	- **Email address**: Read & write
+                          	- **SSH signing keys**: Read & write
+
+	- Click ```create Github App```
+   -   In the interface that shows, **note down** the ```App ID```, ```Client Id```, Click on **Generate new client secret** to get the 
+       ```client secret```, **Generate a private key**, navigate into the downloaded file and copy the key. Keep all these credentials to 
+       be used in the SonarQube configuration.
+   -   On left tabs, click on ```Install App``` and choose the repositories or organisations you want to integrate with SonarQube​.
+             
 - Log in to SonarQube
 Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log in with your credentials.
+
 - Navigate to:
   	- ```Administration``` → ```Configuration``` → ```General Settings``` → ```DevOps Platform Integrations``` → ```GitHub``` 
 - Click: ```Create configuration```. Another way, you can click ``` from GitHub``` on the landing screen to get to the configuration process.
 - ​Fill in the Configuration Details:
 	- **Configuration name**: A recognisable name, e.g., GitHub Integration
-	- **GitHub API URL**: **https://api.github.com/** GOT ```GitHub.com``` and **https://github.company.com/api/v3** for ```Github 				      Enterprise```(related to the github internal domain of the company).
-	- GitHub App ID: Found in your GitHub App settings
-	- Client ID: Found in your GitHub App settings
-	- Client secret: Found in your GitHub App settings
-	- Private Key: Paste the contents of the .pem file you generated earlier
-	- Webhook secret: The secret you set when creating the GitHub App​
+	- **GitHub API URL**: **https://api.github.com/** GOT ```GitHub.com``` and **https://github.company.com/api/v3** for ```Github 		  Enterprise```(related to the github internal domain of the company).
+	- **GitHub App ID**: Found in your GitHub App settings.
+	- **Client ID**: Found in your GitHub App settings.
+	- **Client secret**: Found in your GitHub App settings.
+	- **Private Key**: Paste the contents of the ```.pem``` file you generated earlier in GitHub.
+	- Webhook secret: The secret you set when creating the GitHub App​.
+ - Click ```check configuration``` to see if the configuration was done well.
+ - Log out of SonarQube and log back in to SonarQube to check if the integration was successful.
 
-
-
-
-
-
-
-
+- **Import GitHub Repositories into SonarQube(setting up a project for analysis)**
+	- On the SonarQube Interface, choose ```from Github```, you will see the repo you integrated, choose ```setup this repo``` at top 	right.
+   
+   	- Then Choose ```with Github Actions```. Follow the guide on the screen to set up every other thing necessary for the Analysis. 	(The process allows you to set up secrets that will allow GitHub to authenticate to the SonarQube server in order to have analysis 	results processed).
+ 
+   	- When doen with procedure, click on ```continue``` and paste in the ```workflow yaml``` file used to run the Github action that 	will include **triggering sonar analysis**.
+ 
+   	- Choose the appropriate option based on your project you are going to create to build your application. E.g. ```Maven for this 	project```. Then follow the rest of the process to create the respective files in your github repository.
+ 
+   	- Click ```finish``` below and SonarQube will let you know you are all set and await the running of your ```Github Actions 		Pipeline``` for analysis results to get to the SonarQube UI.
+   	
+   	- You can trigger the pipeline either **Manually** or by **committing changes** to a branch of that repository. Github action will 	keep off in response to any changes you push, and when this action runs successfully, you will be able to see in your SonarQube UI 	that there are results published as baseline overall code analysis of this branch. 
 
 			
-- This token will be used in **Jenkins** to authenticate SonarQube analysis.
-
 ## Step 4: Create Dockerfile for Java Application
 The Dockerfile will instruct Docker how to create an image from the Java application.
 Save the code in the ```Dockerfile``` file in your GitHub repo.

@@ -275,31 +275,31 @@ Default creds:
     		- **Callback URL**: Same as the Homepage URL.
         	- You can **uncheck** ```Active``` at the webhook section.
            	- Set Permissions:
-			- Repository Permissions:
-				- **Checks**: Read & write
-				- **Contents**: Read-only
-   				- **Pull requests**: Read & write
-				- Metadata: Read-only
-				- **Commit statuses**: Read & write
-				- **Merge queues**: Read & write
-				- **Projects**: Read & write
-				- **Packages**: Read & write
-				- **Issues**: Read & write
-				- **Environments**: Read & write
-                                - **Deployments**: Read & write
-                                - **Actions**: Read & write
-      
-			- Organisation Permissions (if applicable):
-				- **Administration**: Read & write
-				- **Blocking users**: Read & write
-				- **Members**: Read & write
-				- **Personal Access Token**: Read & write
-				- **Projects**: Read & write
-      
-			- Account permissions:
-				- **Block another account**: Read & write
-				- **Email address**: Read & write
-				- **SSH signing keys**: Read & write
+				- Repository Permissions:
+					- **Checks**: Read & write
+					- **Contents**: Read-only
+	   				- **Pull requests**: Read & write
+					- Metadata: Read-only
+					- **Commit statuses**: Read & write
+					- **Merge queues**: Read & write
+					- **Projects**: Read & write
+					- **Packages**: Read & write
+					- **Issues**: Read & write
+					- **Environments**: Read & write
+	      				- **Deployments**: Read & write
+	        			- **Actions**: Read & write
+	      
+				- Organisation Permissions (if applicable):
+					- **Administration**: Read & write
+					- **Blocking users**: Read & write
+					- **Members**: Read & write
+					- **Personal Access Token**: Read & write
+					- **Projects**: Read & write
+	      
+				- Account permissions:
+					- **Block another account**: Read & write
+					- **Email address**: Read & write
+					- **SSH signing keys**: Read & write
 
 	- Click ```create Github App```
    -   In the interface that shows, **note down** the ```App ID```, ```Client Id```, Click on **Generate new client secret** to get the 

@@ -289,17 +289,17 @@ Default creds:
                                 - **Deployments**: Read & write
                                 - **Actions**: Read & write
       
-                        - Organisation Permissions (if applicable):
-                                - **Administration**: Read & write
-                                - **Blocking users**: Read & write
-                                - **Members**: Read & write
-                                - **Personal Access Token**: Read & write
-                                - **Projects**: Read & write
+			- Organisation Permissions (if applicable):
+				- **Administration**: Read & write
+				- **Blocking users**: Read & write
+				- **Members**: Read & write
+				- **Personal Access Token**: Read & write
+				- **Projects**: Read & write
       
-                        - Account permissions:
-                          	- **Block another account**: Read & write
-                          	- **Email address**: Read & write
-                          	- **SSH signing keys**: Read & write
+			- Account permissions:
+				- **Block another account**: Read & write
+				- **Email address**: Read & write
+				- **SSH signing keys**: Read & write
 
 	- Click ```create Github App```
    -   In the interface that shows, **note down** the ```App ID```, ```Client Id```, Click on **Generate new client secret** to get the 

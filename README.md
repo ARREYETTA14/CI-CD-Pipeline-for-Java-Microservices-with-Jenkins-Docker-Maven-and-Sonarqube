@@ -181,7 +181,7 @@ Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these
 	    restart: always
 	
 	  sonarqube:
-	    image: sonarqube:10.2.1-community
+	    image: sonarqube:latest
 	    container_name: sonarqube
 	    depends_on:
 	      - db
@@ -205,12 +205,22 @@ Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these
 	#### 3.3 - Run the Stack
 	Before this, uninstall ```awscliv1``` and install ```awscliv2```. If not, there will be an issue of **docker compose not found**.
  	 ```bash
-    	sudo rm -rf /usr/bin/aws
-    	curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    	unzip awscliv2.zip
+	sudo rm -rf /usr/bin/aws
+	curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+   	unzip awscliv2.zip
    	sudo ./aws/install
  	```
-	
+	Increase the instance virtual memory so that **Sonarqube** doesn't have issues ```starting```
+	```bash
+ 	# Run this on the EC2 instance (not inside the container):
+	sudo sysctl -w vm.max_map_count=262144
+ 
+	# Make it persist across reboots by adding this to /etc/sysctl.conf:
+	echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
+ 
+	#Then reload with:
+	sudo sysctl -p
+	``` 
 	```bash
 	docker-compose up -d
 	```
@@ -255,20 +265,18 @@ Default creds:
 	```
 	You should see SonarQube and PostgreSQL containers running perfectly well.
 
-### 3.2 - Generate a SonarQube Authentication Token
+### 3.2 - Integrating Sonarqube with GitHub for code analysis
 - Login to SonarQube
-Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log in with your credentials.Go to your SonarQube instance (e.g., http://<sonarqube-url>:9000) and log in with your credentials.
-- Open Your Account Settings
-	- Click on your **username** in the top-right corner
-	- Go to **“My Account”**
-	- Then head over to the **“Security”** tab
-- Generate the Token
-	- In the **“Generate Tokens”** section:
-		- Enter a name like ```jenkins-token```.
-		- Click **“Generate”**
-		- It’ll show you the token once
-			- ⚠️ **Copy it and store it — this is your only chance**
-			- If you lose it, just generate a new one.
+Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log in with your credentials. Go to your SonarQube instance (e.g., http://<sonarqube-url>:9000) and log in with your credentials.
+
+
+
+
+
+
+
+
+
 			
 - This token will be used in **Jenkins** to authenticate SonarQube analysis.
 

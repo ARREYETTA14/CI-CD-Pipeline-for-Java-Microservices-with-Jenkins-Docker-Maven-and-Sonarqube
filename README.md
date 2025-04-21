@@ -396,7 +396,7 @@ sudo rm -rf /usr/bin/aws
 	aws --version
 	# Should return something like aws-cli/2.x.x
 	```
-## This is to avoid kubectl compatitbility issues with the awscliv1.
+#### This is to avoid kubectl compatibility issues with the awscliv1.
 
 ## Step 6: Log into Jenkins Server
 ### - Add the parameters of the jenkinsfile in the ```Jenkins Global Evironment Varaibles```

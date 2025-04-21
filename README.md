@@ -366,36 +366,36 @@ Save the code in the ```Dockerfile``` file in your GitHub repo.
 ```bash
 sudo rm -rf /usr/bin/aws
 ```
-	- To double-check it’s gone:
-	```bash
-	which aws
-	# Should return nothing
-	```
-	- Optional sanity check:
-	```bash
-	aws --version
-	# Should say "command not found"
-	```
+- To double-check it’s gone:
+```bash
+which aws
+# Should return nothing
+```
+- Optional sanity check:
+```bash
+aws --version
+# Should say "command not found"
+```
 
 **Install AWS CLI v2**
 
-	- Download the installer:
-	```bash
-	curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-	```
-	- Unzip it:
-	```bash
-	unzip awscliv2.zip
-	```
-	- Run the installer:
-	```bash
-	sudo ./aws/install
-	```
-	- Confirm installation:
-	```bash
-	aws --version
-	# Should return something like aws-cli/2.x.x
-	```
+- Download the installer:
+```bash
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+```
+- Unzip it:
+```bash
+unzip awscliv2.zip
+```
+- Run the installer:
+```bash
+sudo ./aws/install
+```
+- Confirm installation:
+```bash
+aws --version
+# Should return something like aws-cli/2.x.x
+```
 #### This is to avoid kubectl compatibility issues with the awscliv1.
 
 ## Step 6: Log into Jenkins Server

@@ -511,27 +511,29 @@ pipeline {
 ```
 
 ## Step 7: Generate the ```deployment.yaml``` and paste in the ```k8s/deployment``` directory in GitHub.
+
 ```yaml
 
 **NB:** Make sure to change ```<your-account-id>``` and put your actul AWS account id, ```<your-region>``` with the region your ecr is, and ```<your-repo-name>``` with the actual repository name.
 
 ## Step 8: Trigger the Jenkins pipeline
 - Install GitHub-related plugins (if not already installed):
-	- Go to ```Manage Jenkins > Plugin Manager > Available```
-		- Search and install:
-			- GitHub plugin
-			- GitHub Branch Source
-			- GitHub API plugin
-			- Pipeline: Multibranch
+- Go to ```Manage Jenkins > Plugin Manager > Available```
+	- Search and install:
+		- GitHub plugin
+		- GitHub Branch Source
+		- GitHub API plugin
+		- Pipeline: Multibranch
 
 - In Jenkins:
-	- Go to ```New Item > Multibranch Pipeline``` (or ```pipeline``` if you use a single branch.
-	- Set a name (e.g., ```hello-world-pipeline```).
-	- Choose:
-		- For Pipeline: Choose ```Pipeline script from SCM```, then:
-			- SCM: ```Git```
-			- Repo URL: your GitHub/xxxxx/xxxxx repo URL
-			- Script Path: leave as ```Jenkinsfile``` (unless it's in a subfolder)
-		- For Multibranch Pipeline: Just point it to the repo, Jenkins will auto-scan for branches with a ```Jenkinsfile```.
+- Go to ```New Item > Multibranch Pipeline``` (or ```pipeline``` if you use a single branch.
+- Set a name (e.g., ```hello-world-pipeline```).
+- Choose:
+	- For Pipeline: Choose ```Pipeline script from SCM```, then:
+		- SCM: ```Git```
+		- Repo URL: your GitHub/xxxxx/xxxxx repo URL
+		- Script Path: leave as ```Jenkinsfile``` (unless it's in a subfolder)
+	- For Multibranch Pipeline: Just point it to the repo, Jenkins will auto-scan for branches with a ```Jenkinsfile```.
 
-	- Hit **Save**, and Jenkins will do the rest (automatically clone, find the ```Jenkinsfile```, and run the build).
+- Hit **Save**, and Jenkins will do the rest (automatically clone, find the ```Jenkinsfile```, and run the build).
+```

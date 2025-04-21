@@ -286,8 +286,8 @@ Default creds:
 					- **Packages**: Read & write
 					- **Issues**: Read & write
 					- **Environments**: Read & write
-	      				- **Deployments**: Read & write
-	        			- **Actions**: Read & write
+           				- **Deployments**: Read & write
+           	   			- **Actions**: Read & write
 	      
 				- Organisation Permissions (if applicable):
 					- **Administration**: Read & write

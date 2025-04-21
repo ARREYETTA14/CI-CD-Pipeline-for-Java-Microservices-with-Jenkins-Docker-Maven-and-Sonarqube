@@ -265,9 +265,20 @@ Default creds:
 	```
 	You should see SonarQube and PostgreSQL containers running perfectly well.
 
-### 3.2 - Integrating Sonarqube with GitHub for code analysis
-- Login to SonarQube
-Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log in with your credentials. Go to your SonarQube instance (e.g., http://<sonarqube-url>:9000) and log in with your credentials.
+### 3.2 - Integrating SonarQube with GitHub for code analysis
+- Log in to SonarQube
+Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log in with your credentials.
+- Navigate to:
+  	- ```Administration``` → ```Configuration``` → ```General Settings``` → ```DevOps Platform Integrations``` → ```GitHub``` 
+- Click: ```Create configuration```. Another way, you can click ``` from GitHub``` on the landing screen to get to the configuration process.
+- ​Fill in the Configuration Details:
+	- **Configuration name**: A recognisable name, e.g., GitHub Integration
+	- **GitHub API URL**: **https://api.github.com/** GOT ```GitHub.com``` and **https://github.company.com/api/v3** for ```Github 				      Enterprise```(related to the github internal domain of the company).
+	- GitHub App ID: Found in your GitHub App settings
+	- Client ID: Found in your GitHub App settings
+	- Client secret: Found in your GitHub App settings
+	- Private Key: Paste the contents of the .pem file you generated earlier
+	- Webhook secret: The secret you set when creating the GitHub App​
 
 
 

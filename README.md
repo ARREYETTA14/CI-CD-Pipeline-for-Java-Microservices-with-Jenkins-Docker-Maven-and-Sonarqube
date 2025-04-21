@@ -175,7 +175,7 @@ Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these
 	    environment:
 	      POSTGRES_USER: sonar
 	      POSTGRES_PASSWORD: sonar
-	      POSTGRES_DB: sonarqube
+	      POSTGRES_DB: sonar
 	    volumes:
 	      - postgres_data:/var/lib/postgresql/data
 	    restart: always
@@ -188,7 +188,7 @@ Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these
 	    ports:
 	      - "9000:9000"
 	    environment:
-	      SONAR_JDBC_URL: jdbc:postgresql://db:5432/sonarqube
+	      SONAR_JDBC_URL: jdbc:postgresql://db:5432/sonar
 	      SONAR_JDBC_USERNAME: sonar
 	      SONAR_JDBC_PASSWORD: sonar
 	    volumes:

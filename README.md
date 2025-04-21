@@ -204,15 +204,15 @@ Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these
 	
 	#### 3.3 - Run the Stack
 	Before this, uninstall ```awscliv1``` and install ```awscliv2```. If not, there will be an issue of **docker compose not found**.
-   	```bash
+   ```bash
     	sudo rm -rf /usr/bin/aws
     	curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     	unzip awscliv2.zip
-    	```
+   ```
 	
-	```bash
+```bash
 	docker-compose up -d
-	```
+```
 
 5. Once SonarQube is running, go to ```http://<your_sonarqube_instance_public_ip>:9000```.
 Default creds:

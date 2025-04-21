@@ -278,14 +278,14 @@ Default creds:
 			- Repository Permissions:
 				- **Checks**: Read & write
 				- **Contents**: Read-only
-				- **Pull requests**: Read & write
+   				- **Pull requests**: Read & write
 				- Metadata: Read-only
-      				- **Commit statuses**: Read & write
-            			- **Merge queues**: Read & write
-                 		- **Projects**: Read & write
-                     		- **Packages**: Read & write
-                         	- **Issues**: Read & write
-                            	- **Environments**: Read & write
+				- **Commit statuses**: Read & write
+				- **Merge queues**: Read & write
+				- **Projects**: Read & write
+				- **Packages**: Read & write
+				- **Issues**: Read & write
+				- **Environments**: Read & write
                                 - **Deployments**: Read & write
                                 - **Actions**: Read & write
                         - Organisation Permissions (if applicable):
@@ -313,7 +313,7 @@ Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log 
 - Click: ```Create configuration```. Another way, you can click ``` from GitHub``` on the landing screen to get to the configuration process.
 - ​Fill in the Configuration Details:
 	- **Configuration name**: A recognisable name, e.g., GitHub Integration
-	- **GitHub API URL**: **https://api.github.com/** GOT ```GitHub.com``` and **https://github.company.com/api/v3** for ```Github 		  Enterprise```(related to the github internal domain of the company).
+	- **GitHub API URL**: **https://api.github.com/** GOT ```GitHub.com``` and **https://github.company.com/api/v3** for ```Github 		Enterprise```(related to the github internal domain of the company).
 	- **GitHub App ID**: Found in your GitHub App settings.
 	- **Client ID**: Found in your GitHub App settings.
 	- **Client secret**: Found in your GitHub App settings.

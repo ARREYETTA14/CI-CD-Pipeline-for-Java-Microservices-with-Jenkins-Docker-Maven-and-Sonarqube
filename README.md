@@ -509,12 +509,9 @@ pipeline {
 }
 
 ```
+**NB:** Make sure to change ```<your-account-id>``` and put your actual AWS account id, ```<your-region>``` with the region your ecr is, and ```<your-repo-name>``` with the actual repository name.
 
 ## Step 7: Generate the ```deployment.yaml``` and paste in the ```k8s/deployment``` directory in GitHub.
-
-```yaml
-
-**NB:** Make sure to change ```<your-account-id>``` and put your actul AWS account id, ```<your-region>``` with the region your ecr is, and ```<your-repo-name>``` with the actual repository name.
 
 ## Step 8: Trigger the Jenkins pipeline
 - Install GitHub-related plugins (if not already installed):
@@ -536,4 +533,4 @@ pipeline {
 	- For Multibranch Pipeline: Just point it to the repo, Jenkins will auto-scan for branches with a ```Jenkinsfile```.
 
 - Hit **Save**, and Jenkins will do the rest (automatically clone, find the ```Jenkinsfile```, and run the build).
-```
+

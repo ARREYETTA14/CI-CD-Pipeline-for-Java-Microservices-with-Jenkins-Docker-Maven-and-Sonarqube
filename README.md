@@ -126,6 +126,7 @@ echo "Installation complete! You might want to reboot the instance to apply grou
 - **Maven Plugin**: To run Maven commands.
 - **SonarQube Scanner Plugin**: For running SonarQube analysis.
 - **Kubernetes Plugin**: For deploying to EKS (Kubernetes).
+- **SonarQube Servers**: 
 
 
 Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these plugins and install them.
@@ -271,7 +272,7 @@ Default creds:
  		- ```Settings``` → ```Developer settings``` → ```GitHub Apps``` → ```New GitHub App```.
 	- Fill in the following:
 		- **Github App name**: A recognisable name.
-		- **Home page URL**: The full URL to your GitHub repo.Copy from the browser once in the repo.
+		- **Home page URL**: The full URL to your GitHub repo. Copy from the browser once in the repo.
     		- **Callback URL**: Same as the Homepage URL.
         	- You can **uncheck** ```Active``` at the webhook section.
            	- Set Permissions:
@@ -338,7 +339,33 @@ Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log 
    	
    	- You can trigger the pipeline either **Manually** or by **committing changes** to a branch of that repository. Github action will 	keep off in response to any changes you push, and when this action runs successfully, you will be able to see in your SonarQube UI 	that there are results published as baseline overall code analysis of this branch. 
 
-			
+### 3.3 - Configure Quality Gates in SonarQube
+SonarQube isn’t just a fancy dashboard — it’s a bouncer at the gate.
+To prevent bad code from getting to prod:
+1. Go to the SonarQube UI at ```http://<your_sonarqube_ip>:9000```.
+2. Navigate to Quality **Gates** → **Create**
+3. Name it ```Strict Java Gate```
+4. Add these conditions:
+	- **New Critical Issues** > 0 → ❌ Block
+	- **New Code Coverage** < 80% → ❌ Block
+5. Assign the gate to your project or make it the default.
+🛑 This gate will be checked in Jenkins before the deployment proceeds.
+
+### 3.4 Configure SonarQube in Jenkins
+1. Go to **Manage Jenkins** → **Configure System**.
+2. Scroll to **SonarQube Servers** section.
+3. Click **Add SonarQube** and give it a name like `SonarQube Scanner`.
+4. Add the **Server URL**: `http://<SonarQube-Instance-IP>:9000`
+5. Click **Add** next to **Server authentication token**:
+   - Generate a token in the SonarQube server in AWS: Go to **My Account → Security** and create a new token (e.g., `jenkins-token`).
+   - Paste that token in Jenkins.
+6. Check the box: **Enable injection of SonarQube server configuration into the build environment**.
+
+Now Jenkins knows where SonarQube lives and how to talk to it.
+
+
+
+
 ## Step 4: Create Dockerfile for Java Application
 The Dockerfile will instruct Docker how to create an image from the Java application.
 Save the code in the ```Dockerfile``` file in your GitHub repo.
@@ -433,13 +460,13 @@ pipeline {
     agent any
 
     environment {
-        SONAR_TOKEN = credentials('sonar-token')  // SonarQube token
+        SONAR_TOKEN = credentials('sonar-token')  // Jenkins credentials ID
         AWS_REGION = 'us-east-1'
         AWS_ACCOUNT_ID = '123456789012'
         ECR_REPO_NAME = 'hello-world'
         EKS_CLUSTER_NAME = 'my-cluster'
         SONAR_PROJECT_KEY = 'hello-world'
-        SONAR_HOST_URL = 'http://<your-sonarqube-instance-public-ip>:9000'
+        SONARQUBE_ENV_NAME = 'SonarQube Scanner'  // This must match Jenkins Sonar config name!
     }
 
     stages {
@@ -449,23 +476,29 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build and SonarQube Analysis') {
             steps {
                 script {
-                    sh 'mvn clean install'
+                    withSonarQubeEnv("${SONARQUBE_ENV_NAME}") {
+                        sh """
+                            mvn clean verify sonar:sonar \
+                            -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                            -Dsonar.login=${SONAR_TOKEN}
+                        """
+                    }
                 }
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('Quality Gate') {
             steps {
-                script {
-                    sh """
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                        -Dsonar.host.url=${SONAR_HOST_URL} \
-                        -Dsonar.login=${SONAR_TOKEN}
-                    """
+                timeout(time: 2, unit: 'MINUTES') {
+                    script {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "SonarQube Quality Gate failed: ${qg.status}"
+                        }
+                    }
                 }
             }
         }
@@ -507,6 +540,7 @@ pipeline {
         }
     }
 }
+
 
 ```
 **NB:** Make sure to change ```<your-account-id>``` and put your actual AWS account id, ```<your-region>``` with the region your ecr is, and ```<your-repo-name>``` with the actual repository name.

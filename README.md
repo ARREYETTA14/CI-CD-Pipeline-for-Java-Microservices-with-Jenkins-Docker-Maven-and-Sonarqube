@@ -387,7 +387,8 @@ Save the code in the ```Dockerfile``` file in your GitHub repo.
 2. Create an EKS Cluster.
 - Follow [Eks Cluster setup guide](https://k21academy.com/docker-kubernetes/amazon-eks-kubernetes-on-aws/)
 - You can use the **AWS Recommended Roles** upon creation of the **cluster** Masternode.
-- **NB:** On the node that helps you connect to the cluster, uninstall the ```awscliv1``` and install ```awscliv2``` before installing ```kubectl```,  .
+- **NB:** On the node that helps you connect to the cluster, uninstall the ```awscliv1``` and install ```awscliv2``` before installing ```kubectl```.
+
 **Uninstall the Old AWS CLI (v1)**
 
 ```bash

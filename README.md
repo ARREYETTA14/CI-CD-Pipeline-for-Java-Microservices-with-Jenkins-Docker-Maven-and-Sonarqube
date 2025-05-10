@@ -139,11 +139,21 @@ echo "Installation complete! You might want to reboot the instance to apply grou
 - **Maven Plugin**: To run Maven commands.
 - **SonarQube Scanner Plugin**: For running SonarQube analysis.
 - **Kubernetes Plugin**: For deploying to EKS (Kubernetes).
-- **SonarQube Servers**: 
+- **Kubernetes CLI**: Run ```kubectl``` commands in pipeline
+- **Kubernetes Credentials**: Handle kubeconfig / auth securely
+- **Kubernetes Credentials Provider**: Pull secrets from K8s if needed
 
+Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for and install these plugins.
 
-Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for these plugins and install them.
+# 1. After you install the SonarQube Scanner plugin, navigate to **Jenkins > Manage Jenkins**. Click on ```System``` (that first icon under **"System Configuration"**)
+# 2. Scroll down until you see a section titled:
+# **📌 SonarQube Servers**
+#- Hit **Add SonarQube** and fill in:
+#	- **Name**: whatever (e.g., ```SonarCloud``` or ```MySonar```)
+#	- **Server URL**: e.g., ```http://<your-sonarqube-host>:9000```
+#	- **Server Authentication Token** (You’ll need to create this in SonarQube and save it in Jenkins Credentials)
 
+ 
 ## Step 3: Set up SonarQube
 ### 3.1 - Install SonarQube
 1. Launch an EC2 Instance. ```t3.medium``` instance type.
@@ -277,7 +287,7 @@ Default creds:
 	```bash
 	docker ps
 	```
-	You should see SonarQube and PostgreSQL containers running perfectly well.
+	You should see SonarQube and Postgresql containers running perfectly well.
 
 ### 3.2 - Integrating SonarQube with GitHub for code analysis
 - Create a **Github App** on Github.
@@ -365,8 +375,9 @@ To prevent bad code from getting to prod:
 🛑 This gate will be checked in Jenkins before the deployment proceeds.
 
 ### 3.4 Configure SonarQube in Jenkins
-1. Go to **Manage Jenkins** → **Configure System**.
-2. Scroll to **SonarQube Servers** section.
+1. Navigate to **Jenkins > Manage Jenkins**. Click on ```System``` (that first icon under **"System Configuration"**)
+2. Scroll down until you see a section titled:
+**📌 SonarQube Servers**
 3. Click **Add SonarQube** and give it a name like `SonarQube Scanner`.
 4. Add the **Server URL**: `http://<SonarQube-Instance-IP>:9000`
 5. Click **Add** next to **Server authentication token**:

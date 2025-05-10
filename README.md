@@ -145,15 +145,6 @@ echo "Installation complete! You might want to reboot the instance to apply grou
 
 Go to **Manage Jenkins** > **Manage Plugins** > **Available** > Search for and install these plugins.
 
-# 1. After you install the SonarQube Scanner plugin, navigate to **Jenkins > Manage Jenkins**. Click on ```System``` (that first icon under **"System Configuration"**)
-# 2. Scroll down until you see a section titled:
-# **📌 SonarQube Servers**
-#- Hit **Add SonarQube** and fill in:
-#	- **Name**: whatever (e.g., ```SonarCloud``` or ```MySonar```)
-#	- **Server URL**: e.g., ```http://<your-sonarqube-host>:9000```
-#	- **Server Authentication Token** (You’ll need to create this in SonarQube and save it in Jenkins Credentials)
-
- 
 ## Step 3: Set up SonarQube
 ### 3.1 - Install SonarQube
 1. Launch an EC2 Instance. ```t3.medium``` instance type.

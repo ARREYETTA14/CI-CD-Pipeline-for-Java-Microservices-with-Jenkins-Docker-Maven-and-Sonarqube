@@ -36,13 +36,26 @@ This is a basic "Hello, World!" program:
 ```bash
 # Update and install necessary dependencies
 sudo yum update && sudo yum upgrade -y
-sudo yum install openjdk-11-jdk -y
 
-# Jenkins now requires Java 17 or higher. Install Amazon Corretto 17:
-sudo amazon-linux-extras enable corretto17
+
+# Import the Corretto GPG key (if you haven't already):
+sudo rpm --import https://yum.corretto.aws/corretto.key
+
+# Add the Corretto YUM repo:
+sudo curl -Lo /etc/yum.repos.d/corretto.repo https://yum.corretto.aws/corretto.repo
+
+# Install Amazon Corretto 17:
 sudo yum install java-17-amazon-corretto -y
+
 # Java version
 java -version  # Check if Java is installed
+
+# Append this to your shell config (~/.bashrc or ~/.bash_profile):
+export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
+export PATH=$JAVA_HOME/bin:$PATH
+
+# Then run:
+source ~/.bashrc
 
 # Add Jenkins repository and key
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo

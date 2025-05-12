@@ -353,7 +353,7 @@ Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log 
  
    	- Choose the appropriate option based on your project you are going to create to build your application. E.g. ```Maven for this project```. Then follow the rest of the process to create the respective files in your github repository.
  
-   	- Click ```finish``` below and SonarQube will let you know you are all set and await the running of your ```Github Actions 	Pipeline``` for analysis results to get to the SonarQube UI.
+   	- Click ```finish this tutorial``` below and SonarQube will let you know you are all set and await the running of your ```Github Actions 	Pipeline``` for analysis results to get to the SonarQube UI.
    	
    	- You can trigger the pipeline either **Manually** or by **committing changes** to a branch of that repository. Github action will 	keep off in response to any changes you push, and when this action runs successfully, you will be able to see in your SonarQube UI 	that there are results published as baseline overall code analysis of this branch. 
 

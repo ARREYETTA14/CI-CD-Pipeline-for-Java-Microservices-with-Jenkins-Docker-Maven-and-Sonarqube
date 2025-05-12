@@ -369,6 +369,8 @@ To prevent bad code from getting to prod:
 5. Assign the gate to your project or make it the default.
 🛑 This gate will be checked in Jenkins before the deployment proceeds.
 
+**NB**: If no issues, when you click on the **issues** tab above, you will see something like ```No Issues. Hooray!```. So you can move on successfully to integrate it with Jenkins such that if the application gets an issue in the future, Jenkins will not deploy the application unless the issue is fixed.
+
 ### 3.4 Configure SonarQube in Jenkins
 1. Navigate to **Jenkins > Manage Jenkins**. Click on ```System``` (that first icon under **"System Configuration"**)
 2. Scroll down until you see a section titled:

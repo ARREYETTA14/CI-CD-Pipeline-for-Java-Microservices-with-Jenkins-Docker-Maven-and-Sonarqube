@@ -286,7 +286,7 @@ Default creds:
  		- ```Settings``` → ```Developer settings``` → ```GitHub Apps``` → ```New GitHub App```.
 	- Fill in the following:
 		- **Github App name**: A recognisable name.
-		- **Home page URL**: The full URL to your GitHub repo. Copy from the browser once in the repo.
+		- **Home page URL**: Your sonarqube Server URL. Copy from the browser once in the repo.
     		- **Callback URL**: Same as the Homepage URL.
         	- You can **uncheck** ```Active``` at the webhook section.
            	- Set Permissions:
@@ -341,6 +341,8 @@ Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log 
 	- Webhook secret: The secret you set when creating the GitHub App​.
  - Click ```check configuration``` to see if the configuration was done well.
  - Log out of SonarQube and log back in to SonarQube to check if the integration was successful.
+ - Log in back using "Credentials", navigate to ```Administration``` → ```Configuration``` → ```General Settings```, **Scroll to server base URL** and put exactly the URL you used as **Callback Url**.
+ - Also, navigate to the **Authentication Tab** and set the Authentication credentials.
 
 - **Import GitHub Repositories into SonarQube(setting up a project for analysis)**
 	- On the SonarQube Interface, choose ```from Github```, you will see the repo you integrated, choose ```setup this repo``` at top 	right.

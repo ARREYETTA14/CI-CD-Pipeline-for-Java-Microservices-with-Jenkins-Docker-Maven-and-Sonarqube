@@ -305,7 +305,7 @@ Default creds:
 					- **Actions**: Read & write
 
 	      
-				- Organisation Permissions (if applicable):
+				- Organisation Permissions (**Only using Organization**):
 					- **Administration**: Read & write
 					- **Blocking users**: Read & write
 					- **Members**: Read & write

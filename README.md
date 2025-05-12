@@ -318,6 +318,8 @@ Default creds:
 					- **SSH signing keys**: Read & write
 
 	- Click ```create Github App```
+   If you encounter any issues when trying to intergrate the **sonarqube** server and **Github**, consider putting all the permissions as ```Read-only``` and it should work.
+   
    -   In the interface that shows, **note down** the ```App ID```, ```Client Id```, Click on **Generate new client secret** to get the 
        ```client secret```, **Generate a private key**, navigate into the downloaded file and copy the key. Keep all these credentials to 
        be used in the SonarQube configuration.
@@ -345,7 +347,7 @@ Go to your SonarQube instance (e.g., ```http://<sonarqube-url>:9000```) and log 
    
    	- Then Choose ```with Github Actions```. Follow the guide on the screen to set up every other thing necessary for the Analysis. 	(The process allows you to set up secrets that will allow GitHub to authenticate to the SonarQube server in order to have analysis 	results processed).
  
-   	- When doen with procedure, click on ```continue``` and paste in the ```workflow yaml``` file used to run the Github action that 	will include **triggering sonar analysis**. The workflow file is found in this repository. Make sure to change ```paths```, ```SONAR_TOKEN``` and ```SONAR_HOST_URL```. 
+   	- When done with procedure, click on ```continue``` and paste in the ```workflow yaml``` file used to run the Github action that 	will include **triggering sonar analysis**. 
  
    	- Choose the appropriate option based on your project you are going to create to build your application. E.g. ```Maven for this project```. Then follow the rest of the process to create the respective files in your github repository.
  

@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/ARREYETTA14/CI-CD-Pipeline-for-Java-Microservices-with-Jenkins-Docker-Maven-and-Sonarqube.git'
+                git 'git@github.com:ARREYETTA14/CI-CD-Pipeline-for-Java-Microservices-with-Jenkins-Docker-Maven-and-Sonarqube.git'
             }
         }
 

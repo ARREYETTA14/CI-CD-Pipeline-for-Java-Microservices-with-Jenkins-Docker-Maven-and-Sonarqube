@@ -378,8 +378,9 @@ To prevent bad code from getting to prod:
 3. Click **Add SonarQube** and give it a name like `SonarQube Scanner`.
 4. Add the **Server URL**: `http://<SonarQube-Instance-IP>:9000`
 5. Click **Add** next to **Server authentication token**:
-   - Generate a token in the SonarQube server in AWS: Go to **My Account → Security** and create a new token (e.g., `jenkins-token`).
-   - Paste that token in Jenkins.
+   - Generate a token in the SonarQube server in AWS: Go to **My Account → Security** and create a new **user token** (e.g., `jenkins-token`).
+   - Paste that token in Jenkins. (At the sonarqube section, click **add > jenkins** let the ```kind``` be ```secret text```, paste the secret and the **ID** can be ```Jenkins-Sonar```, then Hit Add.
+   - In the ```Sonarqube Section``` of **Jenkins**, select now the **ID** name at the level of ```Server authentication token```. Now hit **Save**. 
 6. Check the box: **Enable injection of SonarQube server configuration into the build environment**.
 
 Now Jenkins knows where SonarQube lives and how to talk to it.

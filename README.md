@@ -454,7 +454,7 @@ aws --version
 1. Set Global Environment Variables in Jenkins
 - Go to Jenkins Dashboard
 - Click Manage Jenkins
-- Click Configure System
+- Click System Configuration
 - Scroll down to Global Properties
 - Check the box for Environment variables
 - Add the following variables:

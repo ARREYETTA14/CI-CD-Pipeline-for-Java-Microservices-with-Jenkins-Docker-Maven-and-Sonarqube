@@ -568,13 +568,86 @@ pipeline {
 ```
 **NB:** Make sure to change ```<your-account-id>``` and put your actual AWS account id, ```<your-region>``` with the region your ecr is, and ```<your-repo-name>``` with the actual repository name.
 
-## Step 7: Generate the ```deployment.yaml``` and paste in the ```k8s/deployment``` directory in GitHub.
+- Use the ```ssh-url``` as the repo URL. In other for Jenkins to also use SSH authentication protocol with GitHub, do the following:
+  - ssh into your jenkins server **Generate an SSH Key Pair (on your Jenkins server)**. On the Jenkins controller (or wherever your Jenkins agent runs builds):
+    ```bash
+    ssh-keygen -t rsa -b 4096 -C "jenkins@yourdomain.com"
+    ```
+    Hit **Enter** for the prompts unless you want a custom filename.
 
-## Step 8: Trigger the Jenkins pipeline
+By default, it saves:
+  - Private key → ```~/.ssh/id_rsa```
+  - Public key → ```~/.ssh/id_rsa.pub```
+
+  - Add the public key to GitHub:
+    - Log into GitHub.
+    - Go to **Settings** → **SSH and GPG Keys** → **New SSH Key**
+    - Title: “Jenkins”
+    - Paste the contents of your **public key** (```id_rsa.pub```) in the box
+
+  - Add the private key to Jenkins:
+    - In Jenkins → go to Manage Jenkins → Credentials
+    - You’ll now see something like:
+      ```csharp
+      Stores scoped to Jenkins
+        + Jenkins
+      ```
+    - Click on the (**global**) link under "Jenkins" or whatever is shown there.
+    - Now you should see:
+      - “Domains” list (maybe just “(global)”)
+      - A left sidebar menu with:
+        - **Add Credentials** 
+        - **Manage Domains**
+    - Click on **Add Credentials**
+      - **Kind**: ```SSH Username with private key```
+      - **Username**: ```git``` (very important! GitHub requires ```git``` as SSH user)
+      - Paste in the Jenkins **Private Key**
+      - Add an **ID** for the credential (optional)
+
+  - ssh into your Jenkins server, Install git then, login as root user.(This is to allow Jenkins perform SSHing with no issues).
+    ```bash
+    sudo yum install git -y #install git
+    sudo su - # login as root
+    ```
+  - Run the following commands:
+    ```bash
+    sudo mkdir -p /var/lib/jenkins/.ssh
+    sudo ssh-keyscan github.com >> /var/lib/jenkins/.ssh/known_hosts
+    sudo chown -R jenkins:jenkins /var/lib/jenkins/.ssh
+    sudo chmod 700 /var/lib/jenkins/.ssh
+    sudo chmod 644 /var/lib/jenkins/.ssh/known_hosts
+    sudo chown jenkins:jenkins /var/lib/jenkins/.ssh/id_rsa*
+    sudo chmod 600 /var/lib/jenkins/.ssh/id_rsa
+    ```
+  - Restart the Jenkins server to effect changes:
+    ```bash
+    sudo systemctl restart jenkins
+    ```
+## Step 7: Installing Maven in Jenkins server to package the java app and Configure it in the Jenkins Machine
+- SSH into your Jenkins Server and Install Maven on the server
+```bash
+sudo yum update -y
+sudo yum install maven -y
+```
+- Verify:
+```bash
+mvn -version
+```
+- Configure Maven in Jenkins:
+  - Go to Jenkins → **Manage Jenkins** → **Global Tool Configuration**
+  - Scroll to **Maven**
+  - Add a Maven version (you can select ***Install automatically*** or point to ```/usr/share/maven``` or whatever path mvn lives in)
+    
+    
+
+## Step 8: Generate the ```deployment.yaml``` and paste in the ```k8s/deployment``` directory in GitHub.
+
+## Step 9: Trigger the Jenkins pipeline
 - Install GitHub-related plugins (if not already installed):
 - Go to ```Manage Jenkins > Plugin Manager > Available```
 	- Search and install:
 		- GitHub plugin
+                - GitHub Integration Plugin
 		- GitHub Branch Source
 		- GitHub API plugin
 		- Pipeline: Multibranch
@@ -586,8 +659,65 @@ pipeline {
 	- For Pipeline: Choose ```Pipeline script from SCM```, then:
 		- SCM: ```Git```
 		- Repo URL: your GitHub/xxxxx/xxxxx repo URL
+                - Credentials : your GitHub SSH key or GitHub Personal Access Tokens 
 		- Script Path: leave as ```Jenkinsfile``` (unless it's in a subfolder)
 	- For Multibranch Pipeline: Just point it to the repo, Jenkins will auto-scan for branches with a ```Jenkinsfile```.
 
-- Hit **Save**, and Jenkins will do the rest (automatically clone, find the ```Jenkinsfile```, and run the build).
+- Hit **Save**.
+
+- **Set up the Webhook on GitHub**
+  - Go to your GitHub repo (e.g., ```https://github.com/ARREYETTA14/CI-CD-Pipeline-for-Java-Microservices-with-Jenkins-Docker-Maven-and-Sonarqube```).
+  - Click on **Settings** → Scroll down to **Webhooks**
+  - Click **Add webhook**
+  - Fill in the form:
+    - **Payload URL**:
+      ```http://<your-jenkins-public-IP>:8080/github-webhook/``` (Make sure Jenkins is accessible publicly or via a tunnel if local)
+    - **Content type**:
+      ```application/json```
+    - **Secret**:
+      (Optional, but if used, you’ll need to configure Jenkins to recognize it)
+    - **Which events would you like to trigger this webhook?**
+      ✅ Just the push event (or include pull requests too if you like)
+    - **Click Add Webhook**
+    🔔 After this, GitHub will ping that endpoint whenever you push!
+
+- **Create a GitHub Personal Access Token (PAT)** if not already created:
+  - Go to: https://github.com/settings/tokens
+  - Click on **"Generate new token (classic)"** (or just “Tokens (classic)” if that’s what you see).
+  - Set the following:
+    - **Note**: Write something like “Jenkins Integration”
+    - **Expiration**: Choose a time that fits — maybe 30 or 90 days (or "no expiration" if you prefer)
+    - **Scopes**:
+      ✅ repo (Full control of private repos — needed to clone and fetch)
+      ✅ admin:repo_hook (To let Jenkins create webhooks automatically, optional but good)
+  - Click **Generate Token**
+  - Copy that token and **save it somewhere** (you won’t see it again!)
+
+- **Add this PAT to Jenkins:**
+  - Go to **Jenkins** → **Manage Jenkins** → **Credentials** → (Global or a domain)
+  - Add a new **Username with password** credential:
+    - **Username**: Your GitHub username
+    - **Password**: Paste your Personal Access Token
+    - Give it an ID like ```github-pat```
+  - Use this credential when setting up your Pipeline SCM or GitHub server connection.
+ 
+- **Enable Webhooks in Jenkins (Allow Jenkins to listen)**:
+  - Go to **Jenkins Dashboard** → **Manage Jenkins** → **Configure System**
+  - Scroll down to **GitHub** → **GitHub Servers**
+  - Click Add GitHub Server
+    - Fill it like this:
+      - **Name**: GitHub
+      - **API URL**: ```https://api.github.com```
+      - **Credentials**: Select your GitHub PAT here (create it under Manage Jenkins → Credentials if you haven’t yet)
+      - ✅ **Check** “Manage hooks”
+  - Save!
+ 
+- **Configure Your Jenkins Job to Use Webhook Trigger**
+Now you wire the webhook into your job, like plugging in the trigger.
+  - Open your pipeline job (go to your Jenkins project)
+  - Click **Configure**
+  - Scroll to **Build Triggers**
+  - Check ✅ **GitHub hook trigger for GITScm polling**
+  - Save
+
 

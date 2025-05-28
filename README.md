@@ -635,9 +635,21 @@ mvn -version
 ```
 - Configure Maven in Jenkins:
   - Go to Jenkins → **Manage Jenkins** → **Global Tool Configuration**
-  - Scroll to **Maven**
-  - Add a Maven version (you can select ***Install automatically*** or point to ```/usr/share/maven``` or whatever path mvn lives in)
-    
+  - Scroll down to **Maven installations**
+  - Now you should see:
+    - **Add Maven** button. (You can select ***Install automatically*** or point to ```/usr/share/maven``` or whatever path mvn lives in)
+    - **Name** : ```maven_latest```
+    - **Install automatically** : ✅ Checked
+    - **Install from Apache**: ✅ Selected (as Apache Installer)
+    - **Version** : ```3.8.8``` or ```3.9.6``` (recommended)
+    **NB**: You don’t need to install Maven manually if you use "Install automatically" — Jenkins will download and manage it for you.
+  - Click Save
+  **NB**: Then in your ```Jenkinsfile```, update the maven name:
+```groovy
+tools {
+    maven 'maven_latest'
+}
+```
     
 
 ## Step 8: Generate the ```deployment.yaml``` and paste in the ```k8s/deployment``` directory in GitHub.

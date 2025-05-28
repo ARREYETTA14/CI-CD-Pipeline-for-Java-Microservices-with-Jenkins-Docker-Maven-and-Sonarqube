@@ -720,7 +720,7 @@ tools {
     - Fill it like this:
       - **Name**: GitHub
       - **API URL**: ```https://api.github.com```
-      - **Credentials**: Select your GitHub PAT here (create it under Manage Jenkins → Credentials if you haven’t yet)
+      - **Credentials**: Select your GitHub PAT here (create it under Manage Jenkins → Credentials if you haven’t yet, let the **kind** be **secret text**)
       - ✅ **Check** “Manage hooks”
   - Save!
  

@@ -86,6 +86,7 @@
 //         }
 //     }
 // }
+
 pipeline {
     agent any
 
@@ -106,7 +107,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/ARREYETTA14/CI-CD-Pipeline-for-Java-Microservices-with-Jenkins-Docker-Maven-and-Sonarqube.git',
+                git branch: 'main',  // Explicitly specify the branch
+                    url: 'https://github.com/ARREYETTA14/CI-CD-Pipeline-for-Java-Microservices-with-Jenkins-Docker-Maven-and-Sonarqube.git',
                     credentialsId: 'github-patTT' // Replace with your actual Jenkins credentials ID
             }
         }
@@ -175,3 +177,4 @@ pipeline {
         }
     }
 }
+

@@ -11,18 +11,11 @@
 
     <build>
         <plugins>
-            <!-- Maven Jar Plugin -->
+            <!-- Maven Jar Plugin (no need for execution block unless doing something fancy) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
             <!-- Docker Maven Plugin -->

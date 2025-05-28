@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'maven_latest'  // This name must match the one in Global Tool Configuration
+    }
+
     environment {
         SONAR_TOKEN = credentials('sonar-token')  // Jenkins credentials ID
         AWS_REGION = 'sa-east-1'
